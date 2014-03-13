@@ -37,8 +37,9 @@ AiInputManager.prototype.emit = function (event, data) {
 
 AiInputManager.prototype.step = function() {
   if (typeof Ai === 'undefined') return;
-  if (!this.ai) {
+  if (this.ai == null) {
     this.ai = new Ai();
+    if (this.ai.init != null) this.ai.init();
   }
   var move = this.ai.step(this.game.grid.copy());
   this.emit("move", move);
@@ -63,7 +64,7 @@ AiInputManager.prototype.listen = function () {
 
 AiInputManager.prototype.restart = function (event) {
   event.preventDefault();
-  if (this.ai) {
+  if (this.ai != null && this.ai.restart != null) {
     this.ai.restart();
   }
   this.emit("restart");

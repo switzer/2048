@@ -1,4 +1,8 @@
 function Ai() {
+    this.init = function() {
+        // This method is called when AI is first initialized.
+    }
+
     this.restart = function() {
         // This method is called when the game is reset.
     }
@@ -19,7 +23,7 @@ function Ai() {
         //              Method returns true if you can move to that direction, false otherwise.
 
         // sample AI:
-        if (typeof this.foo === 'undefined') this.foo = 0;
+        if (this.foo == null) this.foo = 0;
         return this.foo++ % 4;
     }
 }
