@@ -84,14 +84,13 @@ Grid.prototype.withinBounds = function (position) {
 };
 
 Grid.prototype.copy = function() {
-    var copy = new Grid(this.size);
-    for (var x = 0; x < this.size; x++) {
-        var row = copy.cells[x] = [];
-        for (var y = 0; y < this.size; y++) {
-            row.push(this.cells[x][y] == null ? null : this.cells[x][y].copy());
-        }
+  var copy = new Grid(this.size);
+  this.eachCell(function(x, y, tile) {
+    if (tile != null) {
+      copy.cells[x][y] = tile.copy();
     }
-    return copy;
+  });
+  return copy;
 }
 
 // REST OF THE METHODS ARE COPIED FROM GAME_MANAGER IN COLD BLOOD. SUE ME!
