@@ -17,5 +17,5 @@ Tile.prototype.updatePosition = function (position) {
 };
 
 Tile.prototype.copy = function (position) {
-  var copy = new Tile({x: this.x, y: this.y}, this.value);
+  return new Tile({x: this.x, y: this.y}, this.value);
 };
