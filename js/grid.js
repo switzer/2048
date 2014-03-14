@@ -85,7 +85,12 @@ Grid.prototype.withinBounds = function (position) {
 
 Grid.prototype.copy = function() {
     var copy = new Grid(this.size);
-    copy.cells = this.cells.slice(0);
+    for (var x = 0; x < this.size; x++) {
+        var row = copy.cells[x] = [];
+        for (var y = 0; y < this.size; y++) {
+            row.push(this.cells[x][y] == null ? null : this.cells[x][y].copy());
+        }
+    }
     return copy;
 }
 
@@ -96,7 +101,6 @@ Grid.prototype.prepareTiles = function () {
   this.eachCell(function (x, y, tile) {
     if (tile) {
       tile.mergedFrom = null;
-      tile.savePosition();
     }
   });
 };
