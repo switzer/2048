@@ -25,7 +25,53 @@ function Ai() {
         //              Method returns true if you can move to that direction, false otherwise.
 
         // sample AI:
-        if (this.foo == null) this.foo = 0;
-        return 3 - (this.foo++ % 4);
+        var best = 0;
+        var m = 0;
+        for (var move = 0; move < 4; move++) {
+          var g = grid.copy();
+          if (g.move(move)) {
+            var s = this.score(g);
+            if (s >= best) {
+              s = best;
+              m = move;
+            }
+          }
+        }
+        return m;
+    }
+    // 3 points for each blank space
+    // 1 points for same tiles next to each other (really 2 because both tiles are going to count)
+    // 1 point for tiles 1 down from each other
+    this.score = function(grid) {
+      var score = 0;
+      for (var col = 0; col < 4; col++) {
+        for (row = 0; row < 4; row++) {
+          if (grid.cells[col][row] == null) {
+            score += 4;
+          } else {
+            // ABOVE
+            if (row != 0 && grid.cells[col][row-1]) {
+              if (grid.cells[col][row-1].value == grid.cells[col][row].value) score+=2;
+              //if (grid.cells[col][row-1].value == grid.cells[col][row].value/2) score++;
+            }
+            // BELOW
+            if (row != 3 && grid.cells[col][row+1]) {
+              if (grid.cells[col][row+1].value == grid.cells[col][row].value) score+=2;
+              //if (grid.cells[col][row+1].value == grid.cells[col][row].value/2) score++;
+            }
+            // LEFT
+            if (col != 0 && grid.cells[col-1][row]) {
+              if (grid.cells[col-1][row].value == grid.cells[col][row].value) score+=2;
+              //if (grid.cells[col-1][row].value == grid.cells[col][row].value/2) score++;
+            }
+            // RIGHT
+            if (col != 3 && grid.cells[col+1][row]) {
+              if (grid.cells[col+1][row].value == grid.cells[col][row].value) score+=2;
+              //if (grid.cells[col+1][row].value == grid.cells[col][row].value/2) score++;
+            }
+          }
+        }
+      }
+      return score;
     }
 }
